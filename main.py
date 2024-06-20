@@ -2,7 +2,7 @@ import subprocess
 
 print("이 프로그램은 파이썬 학습을 돕기 위해 제작되었습니다")
 print("원하시는 메뉴를 입력해주세요!")
-print("1. 출력 2. 입력 3. 조건문 4. 반복문 5. 중첩반복문")
+print("1. 출력 2. 입력 3. 조건문 4. 반복문")
 
 user_input = int(input())
 
@@ -15,8 +15,7 @@ def value(user_input):
         return str(a)
     elif user_input == 4:
         return str(5)
-    elif user_input == 5:
-        return str(3)
+
 
 def analyze(user_input):
     if user_input == 1:
@@ -36,7 +35,7 @@ def analyze(user_input):
             print("출력결과 :", check(code))
             print("잘못된 풀이")
     elif user_input == 3:
-        if check(code) == value(user_input):
+        if check(code) == "False":
             print("정답 :", "False")
             print("출력결과 :", check(code))
             print("정확한 풀이")
@@ -54,18 +53,6 @@ def analyze(user_input):
             print("출력결과 :", check(code))
             print("잘못된 풀이")
 
-    elif user_input == 5:
-        OK = "***\n***\n***"
-        output_str = check(code).strip()  # Convert output to string
-
-        if output_str == OK:
-            print("정답 :\n***\n***\n***")
-            print("출력결과 :\n" + output_str)
-            print("정확한 풀이")
-        else:
-            print("정답 :\n***\n***\n***")
-            print("출력결과 :\n" + output_str)
-            print("잘못된 풀이")
 
 def code_input():
     while True:
@@ -80,11 +67,13 @@ def check(code):
         for line in code:
             f.write(line + "\n")
     if value(user_input) is not None:
-        output = subprocess.run(["python", "test2.py"], input = value(user_input).encode('utf-8'), stdout = subprocess.PIPE).stdout.decode('utf-8')
+        output = subprocess.run(["python", "test.py"], input = value(user_input).encode('utf-8'), stdout = subprocess.PIPE).stdout.decode('utf-8')
         output = output.strip()
+        f.close()
     else:
-        output = subprocess.run(["python", "test2.py"],stdout=subprocess.PIPE).stdout.decode('utf-8')
+        output = subprocess.run(["python", "test.py"],stdout=subprocess.PIPE).stdout.decode('utf-8')
         output = output.strip()
+        f.close()
 
     return output
 
@@ -131,20 +120,6 @@ def repeat1():
     print("for i in range(1, n + 1, 1):")
     print("    print(n)\n")
 
-
-def nested_repetition1():
-    print("길이 n이 입력되면 길이가 n인 사각형을 출력하시오.")
-    print("단, 사각형은 * 모양으로 채운다.\n")
-    print("참고")
-    print("아래의 코드는 n번 동안에")
-    print("안쪽의 j값이 ㅜehd 출력되는 코드이다.\n")
-    print("조건 선택 실행구조 안에 다른 조건 실행구조를 넣어 처리할 수 있는 것과")
-    print("마찬가지로 반복 실행구조 안에 다른 반복 실행구조를 넣어 처리할 수 있다.\n")
-    print("for i in range(n):")
-    print("    for j in range(n):")
-    print("        print(\"*\")\n")
-
-
 if user_input == 1:
     print("출력을 선택했습니다.\n")
     out_question1()
@@ -173,12 +148,6 @@ elif user_input == 4:
     code_input()
     analyze(user_input)
 
-elif user_input == 5:
-    print("중첩 반복문을 선택하셨습니다.\n")
-    nested_repetition1()
-    print("코드를 입력하십시오. 입력을 완료하면 엔터키를 한번 더 눌러주세요")
-    code_input()
-    analyze(user_input)
 
 else:
     print("잘못된 선택입니다.")
